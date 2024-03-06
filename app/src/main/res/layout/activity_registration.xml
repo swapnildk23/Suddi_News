@@ -4,26 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ghost_white"
-    tools:context=".MainActivity"
-    >
+    tools:context=".registration"
+    android:background="@color/lemon_yellow">
     <RelativeLayout
-        android:id="@+id/signup_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         >
-
         <ImageView
-            android:id="@+id/header_title"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="22dp"
+            android:layout_centerVertical="true"
+            android:alpha="0.5"
+            android:background="@drawable/logo"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_name"
+            android:textSize="40dp"
+            android:textColor="@color/orange"
             android:textAlignment="center"
-            android:fontFamily="monospace"
-            android:src="@drawable/logo"
-            android:textColor="@color/maroon"
+            android:layout_marginTop="20dp"
             />
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -31,27 +38,29 @@
             android:layout_alignParentBottom="true"
             app:cardCornerRadius="28dp"
             android:layout_marginBottom="-20dp"
-            app:cardBackgroundColor="@color/lemon_yellow"
+            app:cardBackgroundColor="@color/ghost_white"
             android:alpha="0.8">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="28dp">
+                android:padding="28dp"
+                android:layout_marginBottom="180dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Welcome"
-                    android:textColor="@color/maroon"
+                    android:text="Register!"
+                    android:textColor="@color/blue"
                     android:textSize="32sp"
                     android:textStyle="bold"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Please login"
+                    android:text="Please register to enjoy latest news and more"
                     android:textColor="@color/black"
-                    android:alpha="0.7"
+                    android:alpha="0.5"
+                    android:layout_marginTop="10dp"
                     android:textStyle="bold"
                     />
                 <View
@@ -59,7 +68,7 @@
                     android:layout_height="30dp"/>
 
                 <EditText
-                    android:id="@+id/login_username"
+                    android:id="@+id/reg_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -74,63 +83,42 @@
                     android:layout_height="30dp"/>
 
                 <EditText
-                    android:id="@+id/login_password"
+                    android:id="@+id/reg_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="monospace"
                     android:inputType="textPassword"
                     android:textSize="25dp"
-                    android:autofillHints="password"
                     android:hint="Password"
                     />
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_login"
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"/>
+                <EditText
+                    android:id="@+id/reg_repassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:text="Login"
+                    android:fontFamily="monospace"
+                    android:inputType="textPassword"
+                    android:textSize="25dp"
+                    android:hint="Re-Enter Password"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Register"
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="@color/white"
                     android:backgroundTint="#216524"
+                    android:layout_marginTop="50dp"
+                    android:onClick="backtologin"
                     />
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="40dp"
-                    android:layout_marginTop="40dp"
-                    android:weightSum="2"
-                    android:orientation="horizontal"
-                    >
-
-                    <TextView
-                        android:id="@+id/registration_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="New to the App?"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/maroon"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/register_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" Register!"
-                        android:onClick="regi"
-                        android:layout_toRightOf="@id/registration_text"
-                        android:textColor="@color/blue"
-                        android:textSize="18dp" />
-                </RelativeLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-
-
     </RelativeLayout>
-
-
 </RelativeLayout>
