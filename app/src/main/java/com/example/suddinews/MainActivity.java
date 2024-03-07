@@ -24,7 +24,12 @@ public class MainActivity extends AppCompatActivity {
     }
     public void regi(View view)
     {
-        final Intent i = new Intent(this, registration.class);
+        Intent i = new Intent(this, registration.class);
+        startActivity(i);
+    }
+    public void logi(View view)
+    {
+        Intent i = new Intent(this, News.class);
         startActivity(i);
     }
     private void BindUI()
