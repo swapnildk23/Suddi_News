@@ -15,6 +15,7 @@ public class adminlogin extends AppCompatActivity {
     }
     public void admin_login(View view)
     {
-
+        Intent i =new Intent(this,newsupload.class);
+        startActivity(i);
     }
 }
