@@ -15,9 +15,9 @@ public class registration extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
     }
-    public void backtologin(View view)
+    public void gotohome(View view)
     {
-        final Intent i=new Intent(this,MainActivity.class);
+        final Intent i=new Intent(this,News.class);
         startActivity(i);
     }
     private void BindUI()

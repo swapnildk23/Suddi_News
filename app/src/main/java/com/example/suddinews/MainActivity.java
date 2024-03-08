@@ -12,19 +12,16 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 
 public class MainActivity extends AppCompatActivity {
-    AppCompatButton btn_login;
-    TextView reg;
+    AppCompatButton btn_login,btn_next;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BindUI();
-
-
     }
-    public void regi(View view)
+    public void admin(View view)
     {
-        Intent i = new Intent(this, registration.class);
+        Intent i = new Intent(this, adminlogin.class);
         startActivity(i);
     }
     public void logi(View view)
@@ -35,6 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private void BindUI()
     {
         btn_login=findViewById(R.id.btn_login);
-        reg=findViewById(R.id.register_text);
+        btn_next=findViewById(R.id.btn_next);
     }
 }
