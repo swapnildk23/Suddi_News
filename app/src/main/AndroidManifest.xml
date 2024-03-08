@@ -33,6 +33,15 @@
         <activity
             android:name=".News"
             android:exported="false" />
+        <activity
+            android:name=".newsupload"
+            android:exported="false" />
+        <activity
+            android:name=".adminlogin"
+            android:exported="false" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
