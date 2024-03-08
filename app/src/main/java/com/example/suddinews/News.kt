@@ -16,20 +16,22 @@ class News : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bind = DataBindingUtil.setContentView(this, R.layout.activity_news)
         trans = supportFragmentManager.beginTransaction()
-        trans.replace(R.id.fragments, RecentFragment())
-
+        trans.replace(R.id.fragments, RecentFragment()).commit()
         bind.bn.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.recent -> {
-                    trans.replace(R.id.fragments, RecentFragment())
+                    trans = supportFragmentManager.beginTransaction()
+                    trans.replace(R.id.fragments, RecentFragment()).commit()
                     true
                 }
                 R.id.category -> {
-                    trans.replace(R.id.fragments, CategoryFragment())
+                    trans = supportFragmentManager.beginTransaction()
+                    trans.replace(R.id.fragments, CategoryFragment()).commit()
                     true
                 }
                 R.id.video -> {
-                    trans.replace(R.id.fragments, RecentFragment())
+                    trans = supportFragmentManager.beginTransaction()
+                    trans.replace(R.id.fragments, RecentFragment()).commit()
                     true
                 }
                 else -> {
