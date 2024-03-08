@@ -4,65 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registration"
-    android:background="@color/lemon_yellow">
+    tools:context=".adminlogin">
     <RelativeLayout
+        android:id="@+id/signup_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:id="@+id/header_title"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:alpha="0.5"
-            android:background="@drawable/logo"
-            />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textSize="40dp"
-            android:textColor="@color/orange"
+            android:layout_marginTop="22dp"
             android:textAlignment="center"
-            android:layout_marginTop="20dp"
+            android:fontFamily="monospace"
+            android:src="@drawable/logo"
+            android:textColor="@color/maroon"
             />
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             app:cardCornerRadius="28dp"
-            android:layout_marginBottom="-20dp"
-            app:cardBackgroundColor="@color/ghost_white"
+            app:cardBackgroundColor="@color/lemon_yellow"
             android:alpha="0.8">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="28dp"
-                android:layout_marginBottom="180dp">
+                android:padding="28dp">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hello New User!"
+                    android:text="Welcome Admin"
+                    android:textColor="@color/sky_blue"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:textAlignment="center"
-                    android:textColor="@color/blue"
                     android:textSize="32sp"
                     android:textStyle="bold"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Please register to enjoy latest news and more"
+                    android:text="Please login to continue"
                     android:textColor="@color/black"
                     android:textAlignment="center"
-                    android:alpha="0.8"
-                    android:layout_marginTop="10dp"
+                    android:alpha="0.7"
                     android:textStyle="bold"
                     />
                 <View
@@ -70,56 +59,55 @@
                     android:layout_height="30dp"/>
 
                 <EditText
-                    android:id="@+id/reg_user_first_name"
+                    android:id="@+id/login_admin_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="monospace"
-                    android:inputType="textPersonName"
+                    android:inputType="phone"
                     android:textSize="25dp"
-                    android:hint="First Name"
+                    android:autofillHints="phone"
+                    android:hint="Admin ID"
                     />
                 <View
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"/>
+                    android:layout_height="40dp"/>
 
                 <EditText
-                    android:id="@+id/reg_last_name"
+                    android:id="@+id/login_admin_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="monospace"
-                    android:inputType="textPersonName"
+                    android:inputType="text"
                     android:textSize="25dp"
-                    android:hint="Last Name"
-                    />
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"/>
-                <EditText
-                    android:id="@+id/reg_email_optional"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="monospace"
-                    android:inputType="textEmailAddress"
-                    android:textSize="25dp"
-                    android:hint="Email(Optional)"
+                    android:autofillHints="password"
+                    android:hint="Password"
                     />
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_reg"
+                    android:id="@+id/btn_admin_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Enter"
+                    android:layout_marginTop="30dp"
+                    android:text="Login"
                     android:textStyle="bold"
                     android:textSize="20dp"
+                    android:onClick="admin_login"
                     android:textColor="@color/white"
                     android:backgroundTint="#216524"
-                    android:layout_marginTop="50dp"
-                    android:onClick="gotohome"
+
                     />
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"/>
+
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+
+
     </RelativeLayout>
+
 </RelativeLayout>
