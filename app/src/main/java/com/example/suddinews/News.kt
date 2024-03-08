@@ -31,10 +31,12 @@ class News : AppCompatActivity() {
                 }
                 R.id.video -> {
                     trans = supportFragmentManager.beginTransaction()
-                    trans.replace(R.id.fragments, RecentFragment()).commit()
+                    trans.replace(R.id.fragments, VideoFragment()).commit()
                     true
                 }
                 else -> {
+                    trans = supportFragmentManager.beginTransaction()
+                    trans.replace(R.id.fragments, FavoritesFragment()).commit()
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                     true
                 }
