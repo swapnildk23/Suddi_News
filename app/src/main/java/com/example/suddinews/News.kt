@@ -1,7 +1,6 @@
 package com.example.suddinews
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentTransaction
@@ -37,7 +36,6 @@ class News : AppCompatActivity() {
                 else -> {
                     trans = supportFragmentManager.beginTransaction()
                     trans.replace(R.id.fragments, FavoritesFragment()).commit()
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                     true
                 }
             }
