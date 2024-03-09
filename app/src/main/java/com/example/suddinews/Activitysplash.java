@@ -32,6 +32,7 @@ public class Activitysplash extends AppCompatActivity {
     }
 
     // Bind UI elements with the respective component variables
+
     private void BindUi() {
         ly = findViewById(R.id.lay);
     }
