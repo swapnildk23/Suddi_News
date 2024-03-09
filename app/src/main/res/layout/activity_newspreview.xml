@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".newspreview">
+<ImageView
+    android:id="@+id/admin_news_image"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/admin_news_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/admin_news_image"
+        />
+    <TextView
+        android:id="@+id/admin_news_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/admin_news_header"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/admin_news_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload"
+        android:background="@color/sky_blue"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/admin_news_content"
+        />
+</RelativeLayout>

@@ -93,6 +93,17 @@
                 android:layout_below="@id/btn_upload_image"
                 android:layout_centerHorizontal="true"
                 />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_upload_image"
+                android:layout_centerHorizontal="true"
+                android:background="@color/sky_blue"
+                android:text="Preview"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
