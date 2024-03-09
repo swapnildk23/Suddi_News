@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "900355944736",
+    "project_id": "suddinews-16a0d",
+    "storage_bucket": "suddinews-16a0d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900355944736:android:d353331faacbcbbda22745",
+        "android_client_info": {
+          "package_name": "com.example.suddinews"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl0zzl-rV3SDxSGjbAOeBxf6J_RKaFDFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
