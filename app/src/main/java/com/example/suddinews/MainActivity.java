@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void admin(View view)
     {
-        Intent i = new Intent(this, adminlogin.class);
-        startActivity(i);
+        Intent j = new Intent(this, adminlogin.class);
+        startActivity(j);
     }
     public void logi(View view)
     {

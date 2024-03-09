@@ -5,8 +5,15 @@
     <color name="lemon_yellow">#F5E84F</color>
     <color name="maroon">#BC1A1A</color>
     <color name="blue">#132175</color>
-    <color name="green">#55DC5A</color>
+    <color name="green">#679E38</color>
     <color name="ghost_white">#F8F8FF</color>
     <color name="orange">#F76A24</color>
     <color name="sky_blue">#00BCD4</color>
+    <color name="dark_orange">#EC6B00</color>
+    <color name="medium_blue">#0398E1</color>
+    <color name="card_color_green">#009688</color>
+    <color name="light_purple">#7E57C2</color>
+    <color name="pink">#EA1863</color>
+    <color name="yellow">#FFC201</color>
+    <color name="slight_dark_green">#259B24</color>
 </resources>

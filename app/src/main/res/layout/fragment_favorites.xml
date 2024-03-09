@@ -4,12 +4,15 @@
     tools:context=".FavoritesFragment">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
+        android:layout_height="match_parent"
+        android:background="@color/ghost_white"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="FAVORITES"/>
+            tools:listitem="@layout/news_list"
+            />
     </RelativeLayout>
 
 </layout>
