@@ -5,12 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="12dp"
     app:cardElevation="8dp"
-
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,12 +16,13 @@
         android:padding="4dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-
+        android:background="@color/white"
         >
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/title_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:background="@drawable/imgshape"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +34,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/sky_blue"
             android:text="Candidate Biden Called India a great friend"

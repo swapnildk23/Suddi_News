@@ -1,5 +1,6 @@
 package com.example.suddinews
 
+import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
-class MyAdapter (val dlist:List<Dclass>):RecyclerView.Adapter<MyAdapter.ViewHolder>(){
+class MyAdapter (val dlist:List<Dclass>,val context:Context):RecyclerView.Adapter<MyAdapter.ViewHolder>(){
 
     class ViewHolder(Iview: View) : RecyclerView.ViewHolder(Iview){
         val imageView: ImageView = Iview.findViewById(R.id.title_image)
@@ -27,6 +29,9 @@ class MyAdapter (val dlist:List<Dclass>):RecyclerView.Adapter<MyAdapter.ViewHold
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dm=dlist[position]
         holder.textView.text=dm.header
-        holder.imageView.setImageURI(Uri.parse(dm.img))
+        Glide.with(context)
+            .load(Uri.parse(dm.img))
+            .into(holder.imageView)
+
     }
 }
