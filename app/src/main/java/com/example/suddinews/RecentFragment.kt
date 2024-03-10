@@ -18,6 +18,9 @@ class RecentFragment : Fragment() {
         val bind=DataBindingUtil.inflate<FragmentHomeBinding>(inflater,R.layout.fragment_home,container,false)
         bind.rview.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         Toast.makeText(context, "RECENT", Toast.LENGTH_SHORT).show()
+        val data=ArrayList<Dclass>()
+
+
         return bind.root
     }
 
