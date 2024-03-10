@@ -11,5 +11,6 @@
     <string name="travel">Travel</string>
     <string name="tech">Technology</string>
     <string name="business">Business</string>
-    <string name="health">health</string>
+    <string name="health">Health</string>
+    <string name="select">Select</string>
 </resources>

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E2B2F4"
+    android:background="@color/white"
     tools:context=".newsupload">
+
     <RelativeLayout
         android:id="@+id/admin_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content">
 
-        >
         <TextView
             android:id="@+id/admin_welcome"
             android:layout_width="match_parent"
@@ -23,89 +23,139 @@
             android:fontFamily="@font/abhaya_libre_bold"
             android:textColor="@color/medium_blue"
             android:layout_margin="10dp"
-            android:background="@color/lemon_yellow"
-            />
+            android:background="@color/lemon_yellow" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_below="@id/admin_welcome"
-            android:background="@color/blue"
-            />
+            android:background="@color/blue" />
+
     </RelativeLayout>
-<RelativeLayout
-    android:layout_below="@id/admin_header"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/txt_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="Add News Article"
-            android:textSize="20dp"
-            android:textAlignment="center"
-            />
-    <androidx.cardview.widget.CardView
+
+    <ScrollView
+        android:layout_below="@id/admin_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
-        app:cardCornerRadius="8dp"
-        app:cardBackgroundColor="@color/ghost_white"
-        android:layout_margin="20dp"
-        >
+        android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-    <EditText
-        android:inputType="textMultiLine"
-        android:id="@+id/new_news_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hint="Enter News Title"
-        android:textColor="@color/black"
-        />
-        <EditText
-            android:inputType="textMultiLine"
-            android:id="@+id/new_news_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/new_news_title"
-            android:hint="Enter News Content"
-            android:textColor="@color/black"
-            android:layout_margin="20dp"
-            />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Add News Article"
+                android:textSize="20dp"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/new_news_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:hint="Enter News Title"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/category_dropdown"
+                android:layout_below="@id/new_news_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:hint="Select Category"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/auto_complete_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <EditText
+                android:id="@+id/new_news_content"
+                android:inputType="textMultiLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/category_dropdown"
+                android:hint="Enter News Content"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_upload_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/new_news_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/sky_blue"
                 android:text="Upload Images"
                 android:textStyle="bold"
-                android:layout_margin="5dp"
-                android:background="@color/sky_blue"
+                android:enabled="false"
+                android:visibility="invisible"
+                />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_upload_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/new_news_content"
                 android:layout_centerHorizontal="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/sky_blue"
+                android:text="Upload Videos"
+                android:textStyle="bold"
+                android:enabled="false"
+                android:visibility="invisible"
                 />
             <ImageView
                 android:id="@+id/image_preview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_upload_image"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true" />
+            <VideoView
+                android:id="@+id/video_preview"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@id/image_preview"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_centerHorizontal="true"
+                android:visibility="gone"
                 />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_preview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_upload_image"
+                android:layout_below="@id/video_preview"
                 android:layout_centerHorizontal="true"
                 android:background="@color/sky_blue"
                 android:text="Preview"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                />
+                android:layout_marginTop="10dp" />
+
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
-</RelativeLayout>
+    </ScrollView>
+
 </RelativeLayout>

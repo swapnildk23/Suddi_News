@@ -64,9 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="monospace"
-                    android:inputType="phone"
                     android:textSize="25dp"
-                    android:autofillHints="phone"
                     android:hint="Admin ID"
                     />
                 <View
@@ -81,7 +79,6 @@
                     android:fontFamily="monospace"
                     android:inputType="text"
                     android:textSize="25dp"
-                    android:autofillHints="password"
                     android:hint="Password"
                     />
                 <androidx.appcompat.widget.AppCompatButton
