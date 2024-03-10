@@ -5,24 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".newspreview">
-<ImageView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/preview_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="News Preview"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:layout_margin="10dp"
+        />
+    <ImageView
+    android:layout_below="@id/preview_header"
     android:id="@+id/admin_news_image"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    />
+    <VideoView
+        android:layout_below="@id/preview_header"
+        android:id="@+id/admin_news_video"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        />
     <TextView
         android:id="@+id/admin_news_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:fontFamily="@font/abhaya_libre_bold"
         android:layout_below="@id/admin_news_image"
+        android:textSize="20dp"
         />
+    <View
+        android:id="@+id/divider"
+        android:layout_below="@id/admin_news_header"
+        android:layout_width="match_parent"
+        android:background="@color/black"
+        android:layout_height="3dp"/>
     <TextView
         android:id="@+id/admin_news_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/admin_news_header"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/divider"
         />
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/admin_news_upload"
+        android:id="@+id/btn_admin_news_upload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Upload"
@@ -30,4 +68,6 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/admin_news_content"
         />
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
