@@ -8,13 +8,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.MediaController
 import android.widget.Toast
 import android.widget.VideoView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -102,6 +102,7 @@ class newsupload : AppCompatActivity() {
             }
         }
         btn_preview.setOnClickListener {
+            Log.d("SI",selectedItem.toString())
             if (TextUtils.isEmpty(news_title.text.toString())) {
                 Toast.makeText(this, "Please Enter News Title", Toast.LENGTH_SHORT).show()
             } else if (TextUtils.isEmpty(news_content.text.toString())) {
@@ -116,15 +117,12 @@ class newsupload : AppCompatActivity() {
                     val bundle = Bundle().apply {
                         // Putting extras into the Bundle
                         putString("NEWS_TITLE", newsTitleTxt)
-                        putString("SELECTED_CATEGORY", selectedItem)
+                        putString("SELECTED_CATEGORY", selectedItem.toString())
                         putString("NEWS_CONTENT", newsContentTxt)
                         putString("VIDEO_URI", videoUri.toString())
-
-
                     }
-                    val intent = Intent(this, newspreview::class.java).apply {
-                        putExtras(bundle)
-                    }
+                    val intent = Intent(this, newspreview::class.java)
+                        intent.putExtras(bundle)
                     startActivity(intent)
                 }
                 else{
@@ -137,10 +135,9 @@ class newsupload : AppCompatActivity() {
                     }
 
                     // Creating the Intent
-                    val intent = Intent(this, newspreview::class.java).apply {
+                    val intent = Intent(this, newspreview::class.java)
                         // Putting the Bundle into the Intent
-                        putExtras(bundle)
-                    }
+                        intent.putExtras(bundle)
 
                     // Starting the next activity with the intent
                     startActivity(intent)
