@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.mtp.MtpConstants;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.Firebase;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +25,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -32,18 +39,20 @@ public class MainActivity extends AppCompatActivity {
     EditText phoneno, otp;
     FirebaseAuth mAuth;
     String verificationId;
-
+    FirebaseDatabase mDatabase;
+    DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BindUI();
         mAuth = FirebaseAuth.getInstance();
+        mDatabase=FirebaseDatabase.getInstance();
+        databaseReference=mDatabase.getReference();
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,registration.class));
-                String phoneNumber = phoneno.getText().toString();
+//                String phoneNumber = phoneno.getText().toString();
 //                if ((TextUtils.isEmpty(phoneno.getText().toString()))) {
 //                    Toast.makeText(MainActivity.this, "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
 //                }
@@ -51,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 //                    if (phoneNumber.length() < 10) {
 //                        Toast.makeText(MainActivity.this, "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
 //                    } else {
-////                        sendverificationcode(phoneNumber);
+//                      sendverificationcode(phoneNumber);
 //                    }
 //                }
 
@@ -61,12 +70,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                if ((TextUtils.isEmpty(otp.getText().toString()))) {
-//                    Toast.makeText(MainActivity.this, "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, "Enter Valid OTP", Toast.LENGTH_SHORT).show();
 //                }
 //                else {
 //                    verifycode(otp.getText().toString());
 //                }
-                            startActivity(new Intent(MainActivity.this,registration.class));
+                    startActivity(new Intent(MainActivity.this,News.class));
+
             }
         });
     }
@@ -82,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
 //        PhoneAuthProvider.verifyPhoneNumber(options);
 //
 //    }
-//
+
 //    private PhoneAuthProvider.OnVerificationStateChangedCallbacks
 //            mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//
-//        // below method is used when
-//        // OTP is sent from Firebase
+
+        // below method is used when
+        // OTP is sent from Firebase
 //        @Override
 //        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken token) {
 //            super.onCodeSent(s, token);
@@ -99,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
 //            Toast.makeText(MainActivity.this,"OTP Sent",Toast.LENGTH_SHORT).show();
 //            btn_login.setEnabled(true);
 //        }
-//
-//        // this method is called when user
-//        // receive OTP from Firebase.
+
+        // this method is called when user
+        // receive OTP from Firebase.
 //        @Override
 //        public void onVerificationCompleted(@NotNull PhoneAuthCredential phoneAuthCredential) {
 //            // below line is used for getting OTP code
@@ -126,13 +136,13 @@ public class MainActivity extends AppCompatActivity {
 //            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 //        }
 //    };
-//
-//    // below method is use to verify code from Firebase.
+
+    // below method is use to verify code from Firebase.
 //    private void verifycode(String code) {
 //        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
 //        signInWithCredential(credential);
 //    }
-//
+
 //    private void signInWithCredential(PhoneAuthCredential credential) {
 //        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 //        firebaseAuth.signInWithCredential(credential)
@@ -145,16 +155,37 @@ public class MainActivity extends AppCompatActivity {
 //                            Code for saving phone number and checking and deciding whether to go to registration page or
 //                            home page shoul be here and make sure to change the startActivity as required
 //                             */
-//                            startActivity(new Intent(MainActivity.this,registration.class));
+//                             FirebaseUser currentFireUser = FirebaseAuth.getInstance().getCurrentUser();
+//                             if (currentFireUser != null) {
+//                                 // User is signed in, get their user ID
+//                                 final String userId = currentFireUser.getUid();
+//                                 Log.d("MainActivity", "User ID: " + userId);
+//                                databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                        if(snapshot.hasChild(userId))
+//                                        {
+//                                            startActivity(new Intent(MainActivity.this,News.class));
+//                                            finish();
+//                                        }
+//                                        else {
+//                                            startActivity(new Intent(MainActivity.this,registration.class));
+//                                            finish();
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                    }
+//                                });
+//
 //                         }
+//
 //                    }
-//                });
+//                }
+//    });
 //    }
-
-
-
-
-
     public void admin(View view)
     {
         Intent j = new Intent(this, adminlogin.class);

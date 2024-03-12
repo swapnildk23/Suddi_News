@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.MediaController
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -40,20 +41,28 @@ class newspreview : AppCompatActivity() {
         val rn=firedata.reference.child("Categories")
         val bundle: Bundle? = intent.extras
          newsTitleTxt = bundle?.getString("NEWS_TITLE").toString()
-         selectedItem = bundle?.getString("SELECTED_ITEM").toString()
+         selectedItem = bundle?.getString("SELECTED_CATEGORY").toString()
          newsContentTxt = bundle?.getString("NEWS_CONTENT").toString()
         if(selectedItem.equals("Video"))
         {
             val params = news_title.layoutParams as RelativeLayout.LayoutParams
             params.addRule(RelativeLayout.BELOW, R.id.admin_news_video)
             val videoUriString = bundle?.getString("VIDEO_URI")
+            if (videoUriString.equals(null))
+            {
+                Toast.makeText(this, "Its null", Toast.LENGTH_SHORT).show()
+            }
             videoUri = Uri.parse(videoUriString)
             image_preview.visibility=View.GONE
             video_preview.visibility= View.VISIBLE
             news_title.text=newsTitleTxt
             news_content.text=newsContentTxt
+            val mediaController = MediaController(this)
+            mediaController.setAnchorView(video_preview)
+            video_preview.setMediaController(mediaController)
             video_preview.setVideoURI(videoUri)
             video_preview.start()
+            Toast.makeText(this,selectedItem,Toast.LENGTH_SHORT).show()
         }
         else{
             val imageUriString = bundle?.getString("IMAGE_URI")
@@ -63,6 +72,7 @@ class newspreview : AppCompatActivity() {
             news_title.text=newsTitleTxt
             news_content.text=newsContentTxt
             image_preview.setImageURI(imageUri)
+            Toast.makeText(this,selectedItem,Toast.LENGTH_SHORT).show()
         }
         btn_upload.setOnClickListener{
             val nref=rn.child(selectedItem)
@@ -76,18 +86,31 @@ class newspreview : AppCompatActivity() {
             Toast.makeText(this, "uploaded", Toast.LENGTH_SHORT).show()
             val link="${selectedItem[0]}N${nc+1}"
             val ref=nref.child(link)
-            sr.child(link).putFile(Uri.parse(imageUri.toString())).addOnSuccessListener {
-                sr.child(link).downloadUrl.addOnSuccessListener {
+            if(selectedItem.equals("Video"))
+            {
+                sr.child(link).putFile(Uri.parse(videoUri.toString())).addOnSuccessListener {
+                    sr.child(link).downloadUrl.addOnSuccessListener {
+                        ref.child("VideoURI").setValue("$it")
+                    }.addOnFailureListener {
+                        ref.child("VideoURI").setValue("${sr.child(link).downloadUrl.result}")
+                    }
+                }.addOnFailureListener {
+                    Toast.makeText(this, "${it}", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else {
+                sr.child(link).putFile(Uri.parse(imageUri.toString())).addOnSuccessListener {
+                    sr.child(link).downloadUrl.addOnSuccessListener {
                         ref.child("ImageURI").setValue("$it")
                     }.addOnFailureListener {
                         ref.child("ImageURI").setValue("${sr.child(link).downloadUrl.result}")
+                    }
+                }.addOnFailureListener {
+                    Toast.makeText(this, "${it}", Toast.LENGTH_SHORT).show()
                 }
-            }.addOnFailureListener{
-                Toast.makeText(this, "${it}", Toast.LENGTH_SHORT).show()
             }
             ref.child("Content").setValue(newsContentTxt)
             ref.child("Header").setValue(newsTitleTxt)
-            ref.child("VideoURI").setValue(videoUri.toString())
         }
     }
     private fun BindUi()

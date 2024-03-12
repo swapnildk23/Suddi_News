@@ -21,7 +21,7 @@ public class adminlogin extends AppCompatActivity {
 
     EditText admin_id,admin_password;
     AppCompatButton btn_admin_login;
-    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReferenceFromUrl("https://suddinews-16a0d-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +53,7 @@ public class adminlogin extends AppCompatActivity {
                                         startActivity(new Intent(adminlogin.this,newsupload.class));
                                         finish();
                                     }
+
                                     else {
                                         Toast.makeText(adminlogin.this,"Wrong Password",Toast.LENGTH_SHORT).show();
                                     }

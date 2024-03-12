@@ -13,6 +13,7 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/news_list"
             />
+
     </RelativeLayout>
 
 </layout>

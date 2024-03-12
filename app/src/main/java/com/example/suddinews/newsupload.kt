@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.MediaController
 import android.widget.Toast
 import android.widget.VideoView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,7 +27,7 @@ import androidx.core.content.ContextCompat
 class newsupload : AppCompatActivity() {
     val items = arrayOf(
         "Politics", "World", "Entertainment", "Sports", "Travel",
-        "Technology", "Recent", "Business", "Health", "Video"
+        "Technology", "District", "Business", "Health", "Video"
     )
     lateinit var autoCompleteTextView: AutoCompleteTextView
     lateinit var news_title: EditText
@@ -55,6 +56,9 @@ class newsupload : AppCompatActivity() {
             val data: Intent? = result.data
             videoUri = data?.data
             video_preview.visibility=View.VISIBLE
+            val mediaController = MediaController(this)
+            mediaController.setAnchorView(video_preview)
+            video_preview.setMediaController(mediaController)
             video_preview.setVideoURI(videoUri)
             video_preview.start()
             image_preview.visibility = View.GONE // Hide image preview if any
@@ -121,8 +125,9 @@ class newsupload : AppCompatActivity() {
                         putString("NEWS_CONTENT", newsContentTxt)
                         putString("VIDEO_URI", videoUri.toString())
                     }
+
                     val intent = Intent(this, newspreview::class.java)
-                        intent.putExtras(bundle)
+                    intent.putExtras(bundle)
                     startActivity(intent)
                 }
                 else{
@@ -137,7 +142,7 @@ class newsupload : AppCompatActivity() {
                     // Creating the Intent
                     val intent = Intent(this, newspreview::class.java)
                         // Putting the Bundle into the Intent
-                        intent.putExtras(bundle)
+                    intent.putExtras(bundle)
 
                     // Starting the next activity with the intent
                     startActivity(intent)
