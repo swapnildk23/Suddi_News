@@ -111,17 +111,18 @@ class newsupload : AppCompatActivity() {
                 Toast.makeText(this, "Please Enter News Title", Toast.LENGTH_SHORT).show()
             } else if (TextUtils.isEmpty(news_content.text.toString())) {
                 Toast.makeText(this, "Please Enter News Content", Toast.LENGTH_SHORT).show()
-            } else if (selectedItem.isNullOrEmpty()) {
+            } else if (selectedItem.equals(null)) {
                 Toast.makeText(this, "Please select a category", Toast.LENGTH_SHORT).show()
             } else {
                 val newsTitleTxt = news_title.text.toString()
                 val newsContentTxt = news_content.text.toString()
+                Log.d("Selected Ootside else","$selectedItem")
                 if(selectedItem.equals("Video"))
                 {
                     val bundle = Bundle().apply {
                         // Putting extras into the Bundle
                         putString("NEWS_TITLE", newsTitleTxt)
-                        putString("SELECTED_CATEGORY", selectedItem.toString())
+                        putString("SELECTED_ITEM", selectedItem)
                         putString("NEWS_CONTENT", newsContentTxt)
                         putString("VIDEO_URI", videoUri.toString())
                     }
@@ -135,10 +136,12 @@ class newsupload : AppCompatActivity() {
                         // Putting extras into the Bundle
                         putString("NEWS_TITLE", newsTitleTxt)
                         putString("SELECTED_ITEM", selectedItem)
+                        Log.d("Selected before bundle","$selectedItem")
                         putString("NEWS_CONTENT", newsContentTxt)
                         putString("IMAGE_URI", imageUri.toString())
                     }
-
+                    Toast.makeText(this,"$selectedItem",Toast.LENGTH_SHORT).show()
+                    Log.d("Selected Inside else","$selectedItem")
                     // Creating the Intent
                     val intent = Intent(this, newspreview::class.java)
                         // Putting the Bundle into the Intent

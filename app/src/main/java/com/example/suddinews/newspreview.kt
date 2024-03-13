@@ -2,6 +2,7 @@ package com.example.suddinews
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.MediaController
@@ -23,6 +24,7 @@ class newspreview : AppCompatActivity() {
     lateinit var newsTitleTxt:String
     lateinit var selectedItem: String
     lateinit var newsContentTxt: String
+
     lateinit var news_title: TextView
     lateinit var news_content: TextView
     lateinit var btn_upload: AppCompatButton
@@ -41,8 +43,9 @@ class newspreview : AppCompatActivity() {
         val rn=firedata.reference.child("Categories")
         val bundle: Bundle? = intent.extras
          newsTitleTxt = bundle?.getString("NEWS_TITLE").toString()
-         selectedItem = bundle?.getString("SELECTED_CATEGORY").toString()
+         selectedItem = bundle?.getString("SELECTED_ITEM").toString()
          newsContentTxt = bundle?.getString("NEWS_CONTENT").toString()
+        Log.d("Selected after bundle","$selectedItem")
         if(selectedItem.equals("Video"))
         {
             val params = news_title.layoutParams as RelativeLayout.LayoutParams
@@ -76,15 +79,18 @@ class newspreview : AppCompatActivity() {
         }
         btn_upload.setOnClickListener{
             val nref=rn.child(selectedItem)
+            Log.d("SelectedItem inside btn","$selectedItem")
             nref.addValueEventListener(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     nc=snapshot.childrenCount
+                    Log.d("nc after taken","$nc")
                 }
                 override fun onCancelled(error: DatabaseError) {
                 }
             })
             Toast.makeText(this, "uploaded", Toast.LENGTH_SHORT).show()
             val link="${selectedItem[0]}N${nc+1}"
+            Log.d("COUNT","$nc")
             val ref=nref.child(link)
             if(selectedItem.equals("Video"))
             {

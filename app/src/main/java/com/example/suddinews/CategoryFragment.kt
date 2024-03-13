@@ -20,6 +20,7 @@ class CategoryFragment : Fragment() {
     ): View? {
         val bind=DataBindingUtil.inflate<FragmentCategoryBinding>(inflater,R.layout.fragment_category,container,false)
         Toast.makeText(context, "CATEGORY", Toast.LENGTH_SHORT).show()
+
         return bind.root
     }
 }
