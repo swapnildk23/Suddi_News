@@ -56,4 +56,9 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="shpref">shpref</string>
+    <string name="nofavorites">No Favorites Found.
+        Add your favorite news to Favorites to see them here</string>
+    <string name="nonews">No News To View</string>
+    <string name="noCategoryNews">No news in this Category</string>
 </resources>

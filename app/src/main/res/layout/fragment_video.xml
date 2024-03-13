@@ -7,11 +7,31 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:backgroundTint="@android:color/transparent">
-
+        <TextView
+            android:id="@+id/videos_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Videos"
+            android:textAlignment="center"
+            android:fontFamily="@font/abhaya_libre_bold"
+            android:textColor="@color/sky_blue"
+            android:textSize="45sp"
+            android:textStyle="bold" />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/videos_header"
+            android:background="@color/black"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
         <WebView
             android:id="@+id/video"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:layout_below="@id/divider"
             android:background="@android:color/transparent"
             android:backgroundTint="@android:color/transparent"
             />

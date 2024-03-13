@@ -51,26 +51,43 @@
                     for((category,newsId) in favoritesMap)
                     {
                         Log.d("FireData1","$category $newsId")
-                        val newsRef=databaseReference.child("Categories").child(category).child(newsId)
+                        val newsRef=databaseReference.child("Categories")
                         newsRef.addValueEventListener(object :ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot) {
-                                val header = snapshot.child("Header").value.toString()
-                                val content = snapshot.child("Content").value.toString()
-                                var img:String?=null
-                                var vid:String?=null
-                                if (snapshot.hasChild("ImageURI"))
-                                {
-                                    img=snapshot.child("ImageURI").value.toString()
-                                }
-                                if(snapshot.hasChild("VideoURI"))
-                                {
-                                    vid=snapshot.child("VideoURI").value.toString()
-                                }
-                                val dataclass=Dclass(img,header,content,vid)
+                                if(snapshot.hasChild(category)) {
+                                    if (snapshot.child(category).hasChild(newsId)) {
+                                        val header = snapshot.child(category).child(newsId)
+                                            .child("Header").value.toString()
+                                        val content = snapshot.child(category).child(newsId)
+                                            .child("Content").value.toString()
+                                        var img: String? = null
+                                        var vid: String? = null
+                                        if (snapshot.child(category).child(newsId)
+                                                .hasChild("ImageURI")
+                                        ) {
+                                            img = snapshot.child(category).child(newsId)
+                                                .child("ImageURI").value.toString()
+                                        }
+                                        if (snapshot.child(category).child(newsId)
+                                                .hasChild("VideoURI")
+                                        ) {
+                                            vid = snapshot.child(category).child(newsId)
+                                                .child("VideoURI").value.toString()
+                                        }
+                                        val dataclass = Dclass(img, header, content, vid)
 
-                                data.add(dataclass)
-                                bind.rview.adapter= context?.let { MyAdapter(data, it.applicationContext) }
-                                Log.d("DataClassElement1","$data")
+                                        data.add(dataclass)
+                                        bind.rview.adapter =
+                                            context?.let { MyAdapter(data, it.applicationContext) }
+                                        Log.d("DataClassElement1", "$data")
+                                    }
+                                    else{
+                                        bind.nofavoritesTxt.visibility=View.VISIBLE
+                                    }
+                                }
+                                else{
+                                    bind.nofavoritesTxt.visibility=View.VISIBLE
+                                }
                             }
                             override fun onCancelled(error: DatabaseError) {
                                 Log.e("FirebaseData", "Error fetching news: ${error.message}")

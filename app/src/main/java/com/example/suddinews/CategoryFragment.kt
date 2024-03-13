@@ -23,4 +23,8 @@ class CategoryFragment : Fragment() {
 
         return bind.root
     }
+    public fun categoryClick(view: View) {
+    val id=view.id.toString()
+
+    }
 }

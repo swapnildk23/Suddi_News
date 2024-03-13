@@ -28,12 +28,15 @@ class RecentFragment : Fragment() {
         val data=ArrayList<Dclass>()
         rn.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                data.clear()
                 for(ds in snapshot.children)
                     for(ns in ds.children)
                     {
                         data.add(Dclass(ns.child("ImageURI").value.toString(),ns.child("Header").value.toString(),ns.child("Content").value.toString(),ns.child("VideoURI").value.toString()))
                         Log.d("URI",ns.child("ImageURI").value.toString())
+                        data.reverse()
                     }
+
                 bind.rview.adapter= context?.let { MyAdapter(data, it.applicationContext) }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -42,7 +45,3 @@ class RecentFragment : Fragment() {
         return bind.root
     }
 }
-// News
-    //Entertainment
-        //
-    //Sports
