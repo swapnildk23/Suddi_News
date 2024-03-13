@@ -1,5 +1,7 @@
 package com.example.suddinews
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -20,11 +22,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
 class newspreview : AppCompatActivity() {
-
     lateinit var newsTitleTxt:String
     lateinit var selectedItem: String
     lateinit var newsContentTxt: String
-
+    lateinit var  sh: SharedPreferences
     lateinit var news_title: TextView
     lateinit var news_content: TextView
     lateinit var btn_upload: AppCompatButton
@@ -39,6 +40,7 @@ class newspreview : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_newspreview)
+        sh=getSharedPreferences(getString(R.string.shpref), Context.MODE_PRIVATE)
         BindUi()
         val rn=firedata.reference.child("Categories")
         val bundle: Bundle? = intent.extras
@@ -83,11 +85,13 @@ class newspreview : AppCompatActivity() {
             nref.addValueEventListener(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     nc=snapshot.childrenCount
+                    sh.edit().putLong(selectedItem,nc).apply()
                     Log.d("nc after taken","$nc")
                 }
                 override fun onCancelled(error: DatabaseError) {
                 }
             })
+            nc=sh.getLong(selectedItem,0)
             Toast.makeText(this, "uploaded", Toast.LENGTH_SHORT).show()
             val link="${selectedItem[0]}N${nc+1}"
             Log.d("COUNT","$nc")
