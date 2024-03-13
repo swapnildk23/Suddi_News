@@ -33,9 +33,9 @@ class MyAdapter (val dlist:List<Dclass>,val context:Context):RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dm=dlist[position]
         holder.textView.text=dm.header
-        Glide.with(context)
-            .load(Uri.parse(dm.img))
-            .into(holder.imageView)
+            Glide.with(context)
+                .load(Uri.parse(dm.img))
+                .into(holder.imageView)
         holder.card.setOnClickListener {
             val bundle = Bundle().apply {
                 putString("NEWS_TITLE", dm.header)

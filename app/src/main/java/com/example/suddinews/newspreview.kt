@@ -29,7 +29,6 @@ class newspreview : AppCompatActivity() {
     lateinit var news_title: TextView
     lateinit var news_content: TextView
     lateinit var btn_upload: AppCompatButton
-    lateinit var btn_preview: AppCompatButton
     lateinit var image_preview: ImageView
     lateinit var video_preview: VideoView
     var videoUri: Uri? = null
@@ -47,7 +46,7 @@ class newspreview : AppCompatActivity() {
          newsTitleTxt = bundle?.getString("NEWS_TITLE").toString()
          selectedItem = bundle?.getString("SELECTED_ITEM").toString()
          newsContentTxt = bundle?.getString("NEWS_CONTENT").toString()
-        Log.d("Selected after bundle","$selectedItem")
+        Log.d("Selected after bundle", selectedItem)
         if(selectedItem.equals("Video"))
         {
             val params = news_title.layoutParams as RelativeLayout.LayoutParams
@@ -81,7 +80,7 @@ class newspreview : AppCompatActivity() {
         }
         btn_upload.setOnClickListener{
             val nref=rn.child(selectedItem)
-            Log.d("SelectedItem inside btn","$selectedItem")
+            Log.d("SelectedItem inside btn", selectedItem)
             nref.addValueEventListener(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     nc=snapshot.childrenCount
@@ -101,6 +100,7 @@ class newspreview : AppCompatActivity() {
                 sr.child(link).putFile(Uri.parse(videoUri.toString())).addOnSuccessListener {
                     sr.child(link).downloadUrl.addOnSuccessListener {
                         ref.child("VideoURI").setValue("$it")
+                        ref.child("ImageURI").setValue("$it")
                     }.addOnFailureListener {
                         ref.child("VideoURI").setValue("${sr.child(link).downloadUrl.result}")
                     }
