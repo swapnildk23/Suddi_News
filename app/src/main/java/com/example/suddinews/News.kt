@@ -1,7 +1,6 @@
 package com.example.suddinews
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
@@ -12,7 +11,6 @@ class News : AppCompatActivity() {
     private lateinit var bind: ActivityNewsBinding
     private lateinit var trans: FragmentTransaction
     lateinit var dwrTgl: ActionBarDrawerToggle
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = ActivityNewsBinding.inflate(layoutInflater)
@@ -22,19 +20,20 @@ class News : AppCompatActivity() {
         dwrTgl = ActionBarDrawerToggle(this, bind.nd, R.string.open, R.string.close)
         bind.nd.addDrawerListener(dwrTgl)
         dwrTgl.syncState()
-        supportActionBar?.title = ""
-        supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.hideOffset
-        supportActionBar?.setBackgroundDrawable(resources.getDrawable(R.color.Transparent));
+        bind.drawer.setOnClickListener {
+        }
         bind.nv.setNavigationItemSelectedListener {
+            it.isChecked=true
             when(it.itemId){
                 R.id.about->{
                     trans = supportFragmentManager.beginTransaction()
                     trans.replace(R.id.fragments, AboutFragment()).commit()
                     true
                 }
-
+                R.id.logout->{
+                    //code for logout logic
+                    true
+                }
                 else -> {
                     true
                 }
@@ -64,11 +63,5 @@ class News : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (dwrTgl.onOptionsItemSelected(item)) {
-            true
-        } else super.onOptionsItemSelected(item)
     }
 }
