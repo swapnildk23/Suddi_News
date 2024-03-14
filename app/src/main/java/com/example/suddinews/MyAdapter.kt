@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class MyAdapter (val dlist:List<Dclass>,val context:Context):RecyclerView.Adapter<MyAdapter.ViewHolder>(){
-
     class ViewHolder(Iview: View) : RecyclerView.ViewHolder(Iview){
         val imageView: ImageView = Iview.findViewById(R.id.title_image)
         val textView: TextView = Iview.findViewById(R.id.textView)
