@@ -74,7 +74,7 @@
                                             vid = snapshot.child(category).child(newsId)
                                                 .child("VideoURI").value.toString()
                                         }
-                                        val dataclass = Dclass(img, header, content, vid)
+                                        val dataclass = Dclass(img, header, content, vid,newsId)
 
                                         data.add(dataclass)
                                         bind.rview.adapter =

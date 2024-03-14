@@ -45,6 +45,8 @@ class categorynews : AppCompatActivity() {
                             lateinit var img:String
                             val content=eachNews.child("Content").value.toString()
                             val vid:String?=null
+                            val newsId=eachNews.key
+                            Log.d("Category NewsID","$newsId")
                             if (eachNews.hasChild("ImageURI"))
                             {
                                 img=eachNews.child("ImageURI").value.toString()
@@ -52,7 +54,7 @@ class categorynews : AppCompatActivity() {
                             else{
                                 img= null.toString()
                             }
-                            val dataclass = Dclass(img, header, content, vid)
+                            val dataclass = Dclass(img, header, content, vid,newsId)
                             data.add(dataclass)
                         }
                         rviewC.adapter=MyAdapter(data,applicationContext)
