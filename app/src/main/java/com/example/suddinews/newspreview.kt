@@ -91,9 +91,10 @@ class newspreview : AppCompatActivity() {
                 }
             })
             nc=sh.getLong(selectedItem,0)
+            Log.d("nc before link","$nc $selectedItem")
             Toast.makeText(this, "uploaded", Toast.LENGTH_SHORT).show()
             val link="${selectedItem[0]}N${nc+1}"
-            Log.d("COUNT","$nc")
+            Log.d("COUNT","$link")
             val ref=nref.child(link)
             if(selectedItem.equals("Video"))
             {

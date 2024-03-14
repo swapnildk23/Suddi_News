@@ -1,44 +1,44 @@
 package com.example.suddinews
 
 import android.os.Bundle
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.FragmentTransaction
 import com.example.suddinews.databinding.ActivityNewsBinding
 
-@Suppress("DEPRECATION")
+
+
 class News : AppCompatActivity() {
     private lateinit var bind: ActivityNewsBinding
     private lateinit var trans: FragmentTransaction
     lateinit var dwrTgl: ActionBarDrawerToggle
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(bind.root)
         trans = supportFragmentManager.beginTransaction()
         trans.replace(R.id.fragments, RecentFragment()).commit()
+
+        // Hide the action bar
+        supportActionBar?.hide()
+
         dwrTgl = ActionBarDrawerToggle(this, bind.nd, R.string.open, R.string.close)
         bind.nd.addDrawerListener(dwrTgl)
         dwrTgl.syncState()
-        bind.drawer.setOnClickListener {
-        }
+
         bind.nv.setNavigationItemSelectedListener {
-            it.isChecked=true
             when(it.itemId){
-                R.id.about->{
+                R.id.about -> {
                     trans = supportFragmentManager.beginTransaction()
                     trans.replace(R.id.fragments, AboutFragment()).commit()
                     true
                 }
-                R.id.logout->{
-                    //code for logout logic
-                    true
-                }
-                else -> {
-                    true
-                }
+                else -> true
             }
         }
+
         bind.bn.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.recent -> {
@@ -63,5 +63,11 @@ class News : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (dwrTgl.onOptionsItemSelected(item)) {
+            true
+        } else super.onOptionsItemSelected(item)
     }
 }

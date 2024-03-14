@@ -63,5 +63,6 @@
     <string name="nofavorites">No Favorites Found.
         Add your favorite news to Favorites to see them here</string>
     <string name="nonews">No News To View</string>
+    <string name="noVideoNews">No Video Based News</string>
     <string name="noCategoryNews">No news in this Category</string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,6 @@ class MyAdapter (val dlist:List<Dclass>,val context:Context):RecyclerView.Adapte
         val view=LayoutInflater.from(parent.context).inflate(R.layout. news_list,parent,false)
         return  ViewHolder(view)
     }
-
     override fun getItemCount(): Int {
         return dlist.size
     }
@@ -33,7 +33,7 @@ class MyAdapter (val dlist:List<Dclass>,val context:Context):RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dm=dlist[position]
         holder.textView.text=dm.header
-            Glide.with(context)
+        Glide.with(context)
                 .load(Uri.parse(dm.img))
                 .into(holder.imageView)
         holder.card.setOnClickListener {
@@ -42,6 +42,8 @@ class MyAdapter (val dlist:List<Dclass>,val context:Context):RecyclerView.Adapte
                 putString("NEWS_CONTENT", dm.content)
                 putString("VIDEO_URI", dm.vid.toString())
                 putString("IMAGE_URI", dm.img.toString())
+                putString("ID",dm.id.toString())
+                Log.d("Video content","${dm.vid.toString()}")
             }
             holder.card.setOnClickListener {
                 val intent = Intent(context, News_Extended::class.java)

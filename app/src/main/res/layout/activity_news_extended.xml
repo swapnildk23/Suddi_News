@@ -20,7 +20,6 @@
             android:textSize="45sp"
             android:textColor="@color/black"
             android:layout_marginBottom="50dp"
-
             />
         <View
             android:id="@+id/header_line"
@@ -32,7 +31,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"/>
         <ImageView
-            android:visibility="invisible"
+            android:visibility="gone"
             android:id="@+id/graphicIM"
             android:layout_width="match_parent"
             android:layout_height="250dp"
@@ -49,7 +48,14 @@
             android:layout_marginTop="30dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="50dp"
-            android:visibility="invisible"
+            android:visibility="gone"
+            />
+        <ProgressBar
+            android:id="@+id/loadingProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
             />
         <View
             android:id="@+id/content_line"
