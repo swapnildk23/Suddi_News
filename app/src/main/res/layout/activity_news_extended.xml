@@ -20,7 +20,6 @@
             android:textSize="45sp"
             android:textColor="@color/black"
             android:layout_marginBottom="50dp"
-
             />
         <View
             android:id="@+id/header_line"
