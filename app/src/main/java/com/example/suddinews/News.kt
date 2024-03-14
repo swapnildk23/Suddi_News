@@ -1,8 +1,9 @@
 package com.example.suddinews
 
 import android.os.Bundle
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentTransaction
 import com.example.suddinews.databinding.ActivityNewsBinding
 
@@ -10,12 +11,35 @@ import com.example.suddinews.databinding.ActivityNewsBinding
 class News : AppCompatActivity() {
     private lateinit var bind: ActivityNewsBinding
     private lateinit var trans: FragmentTransaction
+    lateinit var dwrTgl: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bind = DataBindingUtil.setContentView(this, R.layout.activity_news)
+        bind = ActivityNewsBinding.inflate(layoutInflater)
+        setContentView(bind.root)
         trans = supportFragmentManager.beginTransaction()
         trans.replace(R.id.fragments, RecentFragment()).commit()
+        dwrTgl = ActionBarDrawerToggle(this, bind.nd, R.string.open, R.string.close)
+        bind.nd.addDrawerListener(dwrTgl)
+        dwrTgl.syncState()
+        supportActionBar?.title = ""
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hideOffset
+        supportActionBar?.setBackgroundDrawable(resources.getDrawable(R.color.Transparent));
+        bind.nv.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.about->{
+                    trans = supportFragmentManager.beginTransaction()
+                    trans.replace(R.id.fragments, AboutFragment()).commit()
+                    true
+                }
+
+                else -> {
+                    true
+                }
+            }
+        }
         bind.bn.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.recent -> {
@@ -40,5 +64,11 @@ class News : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (dwrTgl.onOptionsItemSelected(item)) {
+            true
+        } else super.onOptionsItemSelected(item)
     }
 }
