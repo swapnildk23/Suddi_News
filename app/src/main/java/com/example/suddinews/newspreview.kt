@@ -85,9 +85,7 @@ class newspreview : AppCompatActivity() {
             nref.addValueEventListener(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     nc=snapshot.childrenCount
-                    sh.edit().putLong(selectedItem,nc).apply()
                     Log.d("nc after taken","$nc")
-                    nc=sh.getLong(selectedItem,0)
                     link="${selectedItem[0]}N${nc+1}"
                     while(snapshot.hasChild(link))
                     {
