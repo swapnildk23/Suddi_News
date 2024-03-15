@@ -15,7 +15,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-
 class VideoFragment : Fragment() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var firebase: FirebaseDatabase

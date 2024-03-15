@@ -36,6 +36,7 @@ class newspreview : AppCompatActivity() {
     var nc:Long = 0
     val sr= Firebase.storage.reference
     val firedata:FirebaseDatabase=FirebaseDatabase.getInstance()
+    var link:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_newspreview)
@@ -86,14 +87,23 @@ class newspreview : AppCompatActivity() {
                     nc=snapshot.childrenCount
                     sh.edit().putLong(selectedItem,nc).apply()
                     Log.d("nc after taken","$nc")
+                    nc=sh.getLong(selectedItem,0)
+                    link="${selectedItem[0]}N${nc+1}"
+                    while(snapshot.hasChild(link))
+                    {
+                        nc++
+                        link="${selectedItem[0]}N${nc+1}"
+                    }
+                    Log.d("link inside","$link")
+                    sh.edit().putString("addr",link).apply()
                 }
                 override fun onCancelled(error: DatabaseError) {
                 }
             })
-            nc=sh.getLong(selectedItem,0)
+            link= sh.getString("addr"," ").toString()
+            Log.d("link","$link")
             Log.d("nc before link","$nc $selectedItem")
             Toast.makeText(this, "uploaded", Toast.LENGTH_SHORT).show()
-            val link="${selectedItem[0]}N${nc+1}"
             Log.d("COUNT","$link")
             val ref=nref.child(link)
             if(selectedItem.equals("Video"))
