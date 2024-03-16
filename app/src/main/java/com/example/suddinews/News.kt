@@ -27,6 +27,10 @@ class News : AppCompatActivity() {
         dwrTgl.syncState()
         val dlg = Dialog(this)
         dlg.setContentView(R.layout.dialog_box)
+        val dlgso=Dialog(this)
+        dlgso.setContentView(R.layout.logout_dialog)
+        val ys:TextView=dlgso.findViewById(R.id.yes)
+        val no:TextView=dlgso.findViewById(R.id.no)
         val cls: TextView =dlg.findViewById(R.id.close)
         bind.drawer.setOnClickListener {
             bind.nd.openDrawer(GravityCompat.START)
@@ -44,7 +48,16 @@ class News : AppCompatActivity() {
                     true
                 }
                 R.id.logout->{
-                    //code for logout logic
+                    dlgso.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+                    dlgso.setCancelable(false)
+                    no.setOnClickListener {
+                        dlgso.dismiss()
+                    }
+                    ys.setOnClickListener {
+                        // code for logout
+                        dlgso.dismiss()
+                    }
+                    dlg.show()
                     true
                 }
                 else -> {
