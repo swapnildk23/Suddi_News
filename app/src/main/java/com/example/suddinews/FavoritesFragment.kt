@@ -48,8 +48,10 @@
                         }
                         Log.d("FirebaseData", "$favoritesMap")
                     }
-                    for((category,newsId) in favoritesMap)
+                    for((categorys,newsId) in favoritesMap)
                     {
+                        val categoryList=categorys.split("_")
+                        val category=categoryList[0]
                         Log.d("FireData1","$category $newsId")
                         val newsRef=databaseReference.child("Categories")
                         newsRef.addValueEventListener(object :ValueEventListener{

@@ -22,10 +22,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
 class newspreview : AppCompatActivity() {
-    lateinit var newsTitleTxt:String
+    lateinit var newsTitleTxt: String
     lateinit var selectedItem: String
     lateinit var newsContentTxt: String
-    lateinit var  sh: SharedPreferences
+    lateinit var sh: SharedPreferences
     lateinit var news_title: TextView
     lateinit var news_content: TextView
     lateinit var btn_upload: AppCompatButton
@@ -33,111 +33,127 @@ class newspreview : AppCompatActivity() {
     lateinit var video_preview: VideoView
     var videoUri: Uri? = null
     var imageUri: Uri? = null
-    var nc:Long = 0
-    val sr= Firebase.storage.reference
-    val firedata:FirebaseDatabase=FirebaseDatabase.getInstance()
-    var link:String=""
+    var nc: Long = 0
+    val sr = Firebase.storage.reference
+    val firedata: FirebaseDatabase = FirebaseDatabase.getInstance()
+    var link: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_newspreview)
-        sh=getSharedPreferences(getString(R.string.shpref), Context.MODE_PRIVATE)
+        sh = getSharedPreferences(getString(R.string.shpref), Context.MODE_PRIVATE)
         BindUi()
-        val rn=firedata.reference.child("Categories")
+        val rn = firedata.reference.child("Categories")
         val bundle: Bundle? = intent.extras
-         newsTitleTxt = bundle?.getString("NEWS_TITLE").toString()
-         selectedItem = bundle?.getString("SELECTED_ITEM").toString()
-         newsContentTxt = bundle?.getString("NEWS_CONTENT").toString()
+        newsTitleTxt = bundle?.getString("NEWS_TITLE").toString()
+        selectedItem = bundle?.getString("SELECTED_ITEM").toString()
+        newsContentTxt = bundle?.getString("NEWS_CONTENT").toString()
         Log.d("Selected after bundle", selectedItem)
-        if(selectedItem.equals("Video"))
-        {
+        if (selectedItem.equals("Video")) {
             val params = news_title.layoutParams as RelativeLayout.LayoutParams
             params.addRule(RelativeLayout.BELOW, R.id.admin_news_video)
             val videoUriString = bundle?.getString("VIDEO_URI")
-            if (videoUriString.equals(null))
-            {
-                Toast.makeText(this, "Its null", Toast.LENGTH_SHORT).show()
+            if (videoUriString == null) {
+                Toast.makeText(this, "Video URI is null", Toast.LENGTH_SHORT).show()
+            } else {
+                videoUri = Uri.parse(videoUriString)
+                image_preview.visibility = View.GONE
+                video_preview.visibility = View.VISIBLE
+                news_title.text = newsTitleTxt
+                news_content.text = newsContentTxt
+                val mediaController = MediaController(this)
+                mediaController.setAnchorView(video_preview)
+                video_preview.setMediaController(mediaController)
+                video_preview.setVideoURI(videoUri)
+                video_preview.start()
             }
-            videoUri = Uri.parse(videoUriString)
-            image_preview.visibility=View.GONE
-            video_preview.visibility= View.VISIBLE
-            news_title.text=newsTitleTxt
-            news_content.text=newsContentTxt
-            val mediaController = MediaController(this)
-            mediaController.setAnchorView(video_preview)
-            video_preview.setMediaController(mediaController)
-            video_preview.setVideoURI(videoUri)
-            video_preview.start()
-            Toast.makeText(this,selectedItem,Toast.LENGTH_SHORT).show()
-        }
-        else{
+        } else {
             val imageUriString = bundle?.getString("IMAGE_URI")
-            imageUri = Uri.parse(imageUriString)
-            video_preview.visibility=View.GONE
-            image_preview.visibility= View.VISIBLE
-            news_title.text=newsTitleTxt
-            news_content.text=newsContentTxt
-            image_preview.setImageURI(imageUri)
-            Toast.makeText(this,selectedItem,Toast.LENGTH_SHORT).show()
+            if (imageUriString == null) {
+                Toast.makeText(this, "Image URI is null", Toast.LENGTH_SHORT).show()
+            } else {
+                imageUri = Uri.parse(imageUriString)
+                video_preview.visibility = View.GONE
+                image_preview.visibility = View.VISIBLE
+                news_title.text = newsTitleTxt
+                news_content.text = newsContentTxt
+                image_preview.setImageURI(imageUri)
+            }
         }
-        btn_upload.setOnClickListener{
-            val nref=rn.child(selectedItem)
+
+        btn_upload.setOnClickListener {
+            val nref = rn.child(selectedItem)
             Log.d("SelectedItem inside btn", selectedItem)
-            nref.addValueEventListener(object:ValueEventListener{
+            nref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    nc=snapshot.childrenCount
-                    Log.d("nc after taken","$nc")
-                    link="${selectedItem[0]}N${nc+1}"
-                    while(snapshot.hasChild(link))
-                    {
+                    sh.edit().clear().apply()
+                    nc = snapshot.childrenCount
+                    Log.d("nc after taken", "$nc")
+                    link = "${selectedItem[0]}${selectedItem[1]}N${nc + 1}"
+                    Log.d("Outside While","$nc $link")
+                    while (snapshot.hasChild(link)) {
                         nc++
-                        link="${selectedItem[0]}N${nc+1}"
+                        link = "${selectedItem[0]}${selectedItem[1]}N${nc + 1}"
+                        Log.d("Inside While","$nc $link")
                     }
-                    Log.d("link inside","$link")
-                    sh.edit().putString("addr",link).apply()
+                    Log.d("link inside", "$link")
+                    sh.edit().putString("addr", link).apply()
+
+                    link = sh.getString("addr", "").toString()
+                    Log.d("link", "$link")
+                    Log.d("nc before link", "$nc $selectedItem")
+                    Toast.makeText(this@newspreview, "Uploaded", Toast.LENGTH_SHORT).show()
+                    Log.d("COUNT", "$link")
+                    val ref = nref.child(link)
+                    if (selectedItem == "Video") {
+                        videoUri?.let { uri ->
+                            sr.child(link).putFile(uri).addOnSuccessListener { uploadTask ->
+                                uploadTask.storage.downloadUrl.addOnSuccessListener { downloadUri ->
+                                    ref.child("VideoURI").setValue(downloadUri.toString())
+                                    ref.child("ImageURI").setValue(downloadUri.toString())
+                                }.addOnFailureListener { exception ->
+                                    Log.e("Firebase Storage", "Error getting download URL: $exception")
+                                    // Handle failure to get download URL
+                                }
+                            }.addOnFailureListener { exception ->
+                                Log.e("Firebase Storage", "Error uploading file: $exception")
+                                Toast.makeText(this@newspreview, "Error uploading file: $exception", Toast.LENGTH_SHORT).show()
+                                // Handle failure to upload file
+                            }
+                        }
+                    } else {
+                        imageUri?.let { uri ->
+                            sr.child(link).putFile(uri).addOnSuccessListener { uploadTask ->
+                                uploadTask.storage.downloadUrl.addOnSuccessListener { downloadUri ->
+                                    ref.child("ImageURI").setValue(downloadUri.toString())
+                                }.addOnFailureListener { exception ->
+                                    Log.e("Firebase Storage", "Error getting download URL: $exception")
+                                    // Handle failure to get download URL
+                                }
+                            }.addOnFailureListener { exception ->
+                                Log.e("Firebase Storage", "Error uploading file: $exception")
+                                Toast.makeText(this@newspreview, "Error uploading file: $exception", Toast.LENGTH_SHORT).show()
+                                // Handle failure to upload file
+                            }
+                        }
+                    }
+                    ref.child("Content").setValue(newsContentTxt)
+                    ref.child("Header").setValue(newsTitleTxt)
                 }
+
                 override fun onCancelled(error: DatabaseError) {
+                    Log.e("Firebase Database", "Error accessing database: $error")
+                    // Handle database access error
                 }
             })
-            link= sh.getString("addr"," ").toString()
-            Log.d("link","$link")
-            Log.d("nc before link","$nc $selectedItem")
-            Toast.makeText(this, "uploaded", Toast.LENGTH_SHORT).show()
-            Log.d("COUNT","$link")
-            val ref=nref.child(link)
-            if(selectedItem.equals("Video"))
-            {
-                sr.child(link).putFile(Uri.parse(videoUri.toString())).addOnSuccessListener {
-                    sr.child(link).downloadUrl.addOnSuccessListener {
-                        ref.child("VideoURI").setValue("$it")
-                        ref.child("ImageURI").setValue("$it")
-                    }.addOnFailureListener {
-                        ref.child("VideoURI").setValue("${sr.child(link).downloadUrl.result}")
-                    }
-                }.addOnFailureListener {
-                    Toast.makeText(this, "${it}", Toast.LENGTH_SHORT).show()
-                }
-            }
-            else {
-                sr.child(link).putFile(Uri.parse(imageUri.toString())).addOnSuccessListener {
-                    sr.child(link).downloadUrl.addOnSuccessListener {
-                        ref.child("ImageURI").setValue("$it")
-                    }.addOnFailureListener {
-                        ref.child("ImageURI").setValue("${sr.child(link).downloadUrl.result}")
-                    }
-                }.addOnFailureListener {
-                    Toast.makeText(this, "${it}", Toast.LENGTH_SHORT).show()
-                }
-            }
-            ref.child("Content").setValue(newsContentTxt)
-            ref.child("Header").setValue(newsTitleTxt)
         }
     }
-    private fun BindUi()
-    {
-        news_content=findViewById(R.id.admin_news_content)
-        news_title=findViewById(R.id.admin_news_header)
-        btn_upload=findViewById(R.id.btn_admin_news_upload)
-        image_preview=findViewById(R.id.admin_news_image)
-        video_preview=findViewById(R.id.admin_news_video)
+
+    private fun BindUi() {
+        news_content = findViewById(R.id.admin_news_content)
+        news_title = findViewById(R.id.admin_news_header)
+        btn_upload = findViewById(R.id.btn_admin_news_upload)
+        image_preview = findViewById(R.id.admin_news_image)
+        video_preview = findViewById(R.id.admin_news_video)
     }
 }
