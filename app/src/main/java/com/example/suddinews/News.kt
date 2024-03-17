@@ -62,9 +62,9 @@ class News : AppCompatActivity() {
                     }
                     ys.setOnClickListener {
                         // code for logout
-//                        firebaseAuth.signOut()
+                        firebaseAuth.signOut()
                         dlgso.dismiss()
-                        finishAffinity()
+                        finish()
                     }
                     dlgso.show()
                     true
@@ -101,4 +101,5 @@ class News : AppCompatActivity() {
             }
         }
     }
+
 }

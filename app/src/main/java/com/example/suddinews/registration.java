@@ -98,10 +98,12 @@ public class registration extends AppCompatActivity {
                                     databaseReference.child("Users").child(userID).child("lastName").setValue(lastNameTxt);
                                     Toast.makeText(getApplicationContext(), "User added successfully", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(registration.this,News.class));
+                                    finish();
                                 }
                                 else{
                                     Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(registration.this,News.class));
+                                    finish();
                                 }
                             }
 

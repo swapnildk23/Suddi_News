@@ -123,15 +123,16 @@ class News_Extended : AppCompatActivity() {
                 params.addRule(RelativeLayout.BELOW, binding.graphicVI.id)
                 binding.graphicVI.setVideoURI(Uri.parse(vi))
                 val mc: MediaController = MediaController(this)
-                mc.setAnchorView(binding.graphicVI)
                 mc.setMediaPlayer(binding.graphicVI)
-                binding.graphicVI.setMediaController(mc)
-                binding.graphicVI.setOnPreparedListener { mp ->
-                    // Hide loading indicator once video is prepared
-                    binding.loadingProgressBar.visibility = View.GONE
-                    mp.start()
-                }
-                binding.graphicVI.setOnInfoListener { mp, what, extra ->
+                    binding.graphicVI.setOnPreparedListener { mp ->
+                        mp.setOnVideoSizeChangedListener { player, width, height ->
+                            binding.loadingProgressBar.visibility = View.GONE
+                            binding.graphicVI.setMediaController(mc)
+                            mc.setAnchorView(binding.graphicVI)
+                            binding.graphicVI.start()
+                        }
+                    }
+                    binding.graphicVI.setOnInfoListener { mp, what, extra ->
                     if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
                         // Show loading indicator when buffering starts
                         binding.loadingProgressBar.visibility = View.VISIBLE
