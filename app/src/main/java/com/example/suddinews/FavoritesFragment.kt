@@ -33,11 +33,10 @@
             Toast.makeText(context, "Favorites", Toast.LENGTH_SHORT).show()
             firebase = FirebaseDatabase.getInstance()
             databaseReference= firebase.reference
-//            val currentUser = FirebaseAuth.getInstance().currentUser
-//            if (currentUser != null) {
-//                userId = currentUser.uid
-//            }
-            userId="bZlvpiTIckO0eGUe9o7plvdISf12"
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            if (currentUser != null) {
+                userId = currentUser.uid
+            }
             val favoritesRef = databaseReference.child("Users").child(userId)
 
             val favoritesMap = hashMapOf<String, String>()

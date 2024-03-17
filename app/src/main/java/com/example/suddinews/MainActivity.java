@@ -1,17 +1,10 @@
 package com.example.suddinews;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.cardview.widget.CardView;
-
 import android.content.Context;
 import android.content.Intent;
-import android.mtp.MtpConstants;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -22,10 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
-import com.google.firebase.Firebase;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,14 +82,14 @@ public class MainActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if ((TextUtils.isEmpty(otp.getText().toString()))) {
-//                    Toast.makeText(MainActivity.this, "Enter Valid OTP", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    verifycode(otp.getText().toString());
-//                }
+                if ((TextUtils.isEmpty(otp.getText().toString()))) {
+                    Toast.makeText(MainActivity.this, "Enter Valid OTP", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    verifycode(otp.getText().toString());
+                }
 
-                startActivity(new Intent(MainActivity.this, News.class));
+               // startActivity(new Intent(MainActivity.this, News.class));
             }
         });
     }
@@ -259,14 +255,14 @@ public class MainActivity extends AppCompatActivity {
         crdview=findViewById(R.id.crdView);
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//        if(currentUser!=null)
-//        {
-//            startActivity(new Intent(MainActivity.this, News.class));
-//            finish();
-//        }
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser!=null)
+        {
+            startActivity(new Intent(MainActivity.this, News.class));
+            finish();
+        }
+    }
 }

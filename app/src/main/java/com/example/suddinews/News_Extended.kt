@@ -37,11 +37,10 @@ class News_Extended : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNewsExtendedBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        val currentUser = FirebaseAuth.getInstance().currentUser;
-//        if (currentUser != null) {
-//            userId = currentUser.uid
-//        }
-        userId="bZlvpiTIckO0eGUe9o7plvdISf12"
+        val currentUser = FirebaseAuth.getInstance().currentUser;
+        if (currentUser != null) {
+            userId = currentUser.uid
+        }
         val bundle: Bundle? = intent.extras
         newsTitleTxt = bundle?.getString("NEWS_TITLE").toString()
         im = bundle?.getString("IMAGE_URI").toString()
