@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.suddinews.databinding.ActivityNewsBinding
+import com.google.firebase.auth.FirebaseAuth
 
 
 @Suppress("DEPRECATION")
@@ -16,6 +17,8 @@ class News : AppCompatActivity() {
     private lateinit var bind: ActivityNewsBinding
     private lateinit var trans: FragmentTransaction
     lateinit var dwrTgl: ActionBarDrawerToggle
+    lateinit var userId: String
+    private val firebaseAuth:FirebaseAuth=FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = ActivityNewsBinding.inflate(layoutInflater)
@@ -34,6 +37,10 @@ class News : AppCompatActivity() {
         val cls: TextView =dlg.findViewById(R.id.close)
         bind.drawer.setOnClickListener {
             bind.nd.openDrawer(GravityCompat.START)
+        }
+        val currentUser = firebaseAuth.currentUser;
+        if (currentUser != null) {
+            userId = currentUser.uid
         }
         bind.nv.setNavigationItemSelectedListener {
             it.isChecked=true
@@ -55,9 +62,11 @@ class News : AppCompatActivity() {
                     }
                     ys.setOnClickListener {
                         // code for logout
+//                        firebaseAuth.signOut()
                         dlgso.dismiss()
+                        finishAffinity()
                     }
-                    dlg.show()
+                    dlgso.show()
                     true
                 }
                 else -> {

@@ -7,6 +7,7 @@
     android:background="@color/ghost_white"
     tools:context=".MainActivity"
     >
+
     <RelativeLayout
         android:id="@+id/signup_header"
         android:layout_width="match_parent"
@@ -23,7 +24,27 @@
             android:src="@drawable/logo"
             android:textColor="@color/maroon"
             />
+        <ProgressBar
+            android:id="@+id/loadingProgressBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/maroon"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            />
+        <TextView
+            android:id="@+id/internetTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loadingProgressBar1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Please connect to Internet"
+            android:textColor="@color/maroon"
+            android:visibility="invisible"
+            />
         <androidx.cardview.widget.CardView
+            android:id="@+id/crdView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -31,6 +52,7 @@
             android:layout_marginBottom="-20dp"
             app:cardBackgroundColor="@color/lemon_yellow"
             android:alpha="0.8">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,6 +112,7 @@
                     android:textSize="25dp"
                     android:hint="Please Enter the OTP"
                     />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_login"
                     android:layout_width="match_parent"
@@ -100,8 +123,9 @@
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="@color/white"
-                    android:backgroundTint="#216524"
-                    />
+                    android:backgroundTint="#216524"/>
+<!--                    android:enabled="false"-->
+
                 <View
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"/>

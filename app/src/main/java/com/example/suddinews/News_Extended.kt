@@ -41,8 +41,11 @@ class News_Extended : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNewsExtendedBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val currentUser = FirebaseAuth.getInstance().currentUser;
-        userId = "bZlvpiTIckO0eGUe9o7plvdISf12"
+//        val currentUser = FirebaseAuth.getInstance().currentUser;
+//        if (currentUser != null) {
+//            userId = currentUser.uid
+//        }
+        userId="bZlvpiTIckO0eGUe9o7plvdISf12"
         val bundle: Bundle? = intent.extras
         newsTitleTxt = bundle?.getString("NEWS_TITLE").toString()
         im = bundle?.getString("IMAGE_URI").toString()
@@ -59,7 +62,7 @@ class News_Extended : AppCompatActivity() {
             "Wo" -> "World"
             "Sp" -> "Sports"
             "Tr" -> "Travel"
-            "Tec" -> "Technology"
+            "Te" -> "Technology"
             "Di" -> "District"
             "Bu" -> "Business"
             "He" -> "Health"
@@ -73,7 +76,17 @@ class News_Extended : AppCompatActivity() {
         Log.d("num cat", "$categoryName $newsNumber $newsID $favoriteKey")
         binding.content.text = newsContentTxt
         binding.header.text = newsTitleTxt
+        if(categoryName=="Video"){
+            val favoritesParams = binding.favoritesButton.layoutParams as RelativeLayout.LayoutParams
+            favoritesParams.addRule(RelativeLayout.BELOW, binding.graphicVI.id)
+            favoritesParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE)
 
+            // Set layout parameters for notfavoritesButton
+            val notFavoritesParams = binding.notfavoritesButton.layoutParams as RelativeLayout.LayoutParams
+            notFavoritesParams.addRule(RelativeLayout.BELOW, binding.graphicVI.id)
+            notFavoritesParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE)
+
+        }
         checkFavorites { isFavorite ->
             this.isFavorite = isFavorite
             favoriteCheckListener?.invoke(isFavorite)
@@ -107,7 +120,7 @@ class News_Extended : AppCompatActivity() {
                 Log.d("Video check img", "$vi")
                 binding.graphicIM.visibility = View.VISIBLE
                 binding.graphicVI.visibility = View.GONE
-                Glide.with(this).load(Uri.parse(im)).into(binding.graphicIM)
+                Glide.with(this.applicationContext).load(Uri.parse(im)).into(binding.graphicIM)
             } else {
                 binding.graphicIM.visibility = View.GONE
                 binding.graphicVI.visibility = View.VISIBLE

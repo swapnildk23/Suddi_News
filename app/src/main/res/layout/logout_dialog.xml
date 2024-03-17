@@ -36,17 +36,18 @@
         android:textColor="@color/card_color_green"
         android:layout_marginBottom="20dp"
         />
+
     <TextView
+        android:id="@+id/yes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/yes"
-        android:text="Yes"
-        android:textSize="20sp"
-        android:layout_toLeftOf="@id/no"
-        android:layout_marginTop="40dp"
         android:layout_below="@id/msg2"
-        android:layout_margin="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:layout_toLeftOf="@id/no"
+        android:text="Yes"
         android:textColor="@color/card_color_green"
-        android:layout_marginBottom="20dp"
-        />
+        android:textSize="20sp" />
 </RelativeLayout>

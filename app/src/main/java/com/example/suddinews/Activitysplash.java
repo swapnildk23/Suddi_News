@@ -6,9 +6,12 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -47,7 +50,7 @@ public class Activitysplash extends AppCompatActivity {
 
     // Method to start checking internet connectivity
     private void startCheckingInternetConnectivity() {
-        handler = new Handler();
+        handler = new Handler(Looper.getMainLooper());
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -67,9 +70,13 @@ public class Activitysplash extends AppCompatActivity {
     private void checkInternetConnectivity() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
-            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-            internetConnected = activeNetworkInfo != null && activeNetworkInfo.isConnected();
-            if (internetConnected&&!mainActivityStarted) {
+            Network network = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                network = connectivityManager.getActiveNetwork();
+            }
+            NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(network);
+            internetConnected = capabilities != null && (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
+            if (internetConnected && !mainActivityStarted) {
                 stopCheckingInternetConnectivity(); // Stop checking once internet connected
                 startMainActivity();
             } else {

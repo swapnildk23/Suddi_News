@@ -2,13 +2,21 @@ package com.example.suddinews
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.MediaController
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.VideoView
@@ -37,12 +45,19 @@ class newspreview : AppCompatActivity() {
     val sr = Firebase.storage.reference
     val firedata: FirebaseDatabase = FirebaseDatabase.getInstance()
     var link: String = ""
-
+    private lateinit var loadingProgressBar: ProgressBar
+    private lateinit var internetTextView: TextView
+    private lateinit var handler: Handler
+    private lateinit var runnable: Runnable
+    private var internetConnected = false
+    private val mainActivityStarted = false
+    private lateinit var scrollView:ScrollView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_newspreview)
         sh = getSharedPreferences(getString(R.string.shpref), Context.MODE_PRIVATE)
         BindUi()
+        startCheckingInternetConnectivity()
         val rn = firedata.reference.child("Categories")
         val bundle: Bundle? = intent.extras
         newsTitleTxt = bundle?.getString("NEWS_TITLE").toString()
@@ -148,12 +163,54 @@ class newspreview : AppCompatActivity() {
             })
         }
     }
+    private fun startCheckingInternetConnectivity() {
+        handler = Handler(Looper.getMainLooper())
+        runnable = object : Runnable {
+            override fun run() {
+                checkInternetConnectivity()
+                handler.postDelayed(this, 1000) // Check every second
+            }
+        }
+        handler.postDelayed(runnable, 1000) // Initial delay
+    }
 
+    private fun stopCheckingInternetConnectivity() {
+        handler.removeCallbacks(runnable)
+    }
+    private fun checkInternetConnectivity() {
+        val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            var network: Network? = null
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                network = connectivityManager.activeNetwork
+            }
+            val capabilities = connectivityManager.getNetworkCapabilities(network)
+            internetConnected =
+                capabilities != null && (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || capabilities.hasTransport(
+                    NetworkCapabilities.TRANSPORT_CELLULAR
+                ))
+            if (internetConnected && !mainActivityStarted) {
+                stopCheckingInternetConnectivity() // Stop checking once internet connected
+                loadingProgressBar!!.visibility = View.INVISIBLE
+                internetTextView!!.visibility = View.INVISIBLE
+                btn_upload.isEnabled=true
+                scrollView.visibility=View.VISIBLE
+            } else {
+                loadingProgressBar!!.visibility = View.VISIBLE
+                internetTextView!!.visibility = View.VISIBLE
+                btn_upload.isEnabled=false
+                scrollView.visibility=View.INVISIBLE
+            }
+        }
+    }
     private fun BindUi() {
         news_content = findViewById(R.id.admin_news_content)
         news_title = findViewById(R.id.admin_news_header)
         btn_upload = findViewById(R.id.btn_admin_news_upload)
         image_preview = findViewById(R.id.admin_news_image)
         video_preview = findViewById(R.id.admin_news_video)
+        loadingProgressBar = findViewById(R.id.loadingProgressBar3)
+        internetTextView = findViewById(R.id.internetTextView3)
+        scrollView=findViewById(R.id.scrollView)
     }
 }

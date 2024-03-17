@@ -9,6 +9,7 @@
         android:id="@+id/signup_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/lemon_yellow"
         >
 
         <ImageView
@@ -23,7 +24,28 @@
             android:src="@drawable/logo"
             android:textColor="@color/maroon"
             />
+        <ProgressBar
+            android:id="@+id/loadingProgressBar2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/maroon"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/header_title"
+            android:visibility="invisible"
+            />
+        <TextView
+            android:id="@+id/internetTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loadingProgressBar2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Please connect to Internet"
+            android:textColor="@color/maroon"
+            android:visibility="invisible"
+            />
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
@@ -90,7 +112,6 @@
                     android:text="Login"
                     android:textStyle="bold"
                     android:textSize="20dp"
-                    android:onClick="admin_login"
                     android:textColor="@color/white"
                     android:backgroundTint="#216524"
 

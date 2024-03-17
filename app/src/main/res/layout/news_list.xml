@@ -11,39 +11,35 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@color/white"
         >
+
         <ImageView
             android:id="@+id/title_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/imgshape"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:adjustViewBounds="true"
+            android:background="@drawable/imgshape"
             android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="10dp"
-            app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/logo"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:layout_toRightOf="@id/title_image"
             android:textColor="@color/sky_blue"
+            android:layout_marginTop="10dp"
             android:text="Candidate Biden Called India a great friend"
-            android:layout_marginTop="-20dp"
             app:layout_constraintStart_toEndOf="@id/title_image"
             android:fontFamily="sans-serif-smallcaps"
             />
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

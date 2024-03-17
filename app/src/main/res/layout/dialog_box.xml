@@ -16,7 +16,7 @@
         android:layout_below="@id/ima"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Suddi News is Managed by WEBCASCADE"
+        android:text="Suddi News is Managed by WEBCASCADE Technology"
         android:gravity="center"
         android:textSize="25sp"
         android:layout_centerHorizontal="true"
