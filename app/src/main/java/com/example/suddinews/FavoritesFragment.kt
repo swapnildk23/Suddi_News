@@ -39,6 +39,7 @@
             val favoritesMap = hashMapOf<String, String>()
             favoritesRef.addValueEventListener(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    data.clear()
                     for(childSnapshot in snapshot.children) {
                         val key = childSnapshot.key as String
                         val value = childSnapshot.value as String?
@@ -56,7 +57,9 @@
                         newsRef.addValueEventListener(object :ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if(snapshot.hasChild(category)) {
+                                    bind.nofavoritesTxt.visibility=View.INVISIBLE
                                     if (snapshot.child(category).hasChild(newsId)) {
+                                        bind.nofavoritesTxt.visibility=View.INVISIBLE
                                         val header = snapshot.child(category).child(newsId)
                                             .child("Header").value.toString()
                                         val content = snapshot.child(category).child(newsId)

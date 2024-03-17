@@ -15,10 +15,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 class News_Extended : AppCompatActivity() {
 
@@ -107,7 +103,7 @@ class News_Extended : AppCompatActivity() {
                 Log.d("Video check img", "$vi")
                 binding.graphicIM.visibility = View.VISIBLE
                 binding.graphicVI.visibility = View.GONE
-                Glide.with(this).load(Uri.parse(im)).into(binding.graphicIM)
+                Glide.with(this.applicationContext).load(Uri.parse(im)).into(binding.graphicIM)
             } else {
                 binding.graphicIM.visibility = View.GONE
                 binding.graphicVI.visibility = View.VISIBLE

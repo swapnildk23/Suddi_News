@@ -57,7 +57,7 @@ class News : AppCompatActivity() {
                         // code for logout
                         dlgso.dismiss()
                     }
-                    dlg.show()
+                    dlgso.show()
                     true
                 }
                 else -> {
