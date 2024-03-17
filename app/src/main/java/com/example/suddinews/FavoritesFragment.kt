@@ -87,7 +87,9 @@
                                                 vid = snapshot.child(category).child(newsId)
                                                     .child("VideoURI").value.toString()
                                             }
-                                            val dataclass = Dclass(img, header, content, vid,newsId)
+                                            val count=snapshot.child(category).child(newsId)
+                                                .child("count").value.toString().toLong()
+                                            val dataclass = Dclass(img, header, content, vid,newsId,count)
 
                                             data.add(dataclass)
 

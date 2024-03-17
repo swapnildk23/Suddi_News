@@ -40,15 +40,16 @@ class RecentFragment : Fragment() {
                                     ns.child("Header").value.toString(),
                                     ns.child("Content").value.toString(),
                                     ns.child("VideoURI").value.toString(),
-                                    ns.key
+                                    ns.key,
+                                    ns.child("count").value.toString().toLong()
                                 )
                             )
                             Log.d("Ids","${ns.key}")
                             Log.d("URI", ns.child("ImageURI").value.toString())
-                            data.reverse()
+
                         }
                    // }
-
+                data.sortByDescending { it.count }
                 bind.rview.adapter= context?.let { MyAdapter(data, it.applicationContext) }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -57,3 +58,4 @@ class RecentFragment : Fragment() {
         return bind.root
     }
 }
+

@@ -22,12 +22,16 @@ import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class newspreview : AppCompatActivity() {
     lateinit var newsTitleTxt: String
@@ -42,6 +46,7 @@ class newspreview : AppCompatActivity() {
     var videoUri: Uri? = null
     var imageUri: Uri? = null
     var nc: Long = 0
+    var totalCount:Long=0
     val sr = Firebase.storage.reference
     val firedata: FirebaseDatabase = FirebaseDatabase.getInstance()
     var link: String = ""
@@ -58,6 +63,7 @@ class newspreview : AppCompatActivity() {
         sh = getSharedPreferences(getString(R.string.shpref), Context.MODE_PRIVATE)
         BindUi()
         startCheckingInternetConnectivity()
+        val databaseReference =firedata.reference
         val rn = firedata.reference.child("Categories")
         val bundle: Bundle? = intent.extras
         newsTitleTxt = bundle?.getString("NEWS_TITLE").toString()
@@ -101,61 +107,95 @@ class newspreview : AppCompatActivity() {
             Log.d("SelectedItem inside btn", selectedItem)
             nref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    sh.edit().clear().apply()
-                    nc = snapshot.childrenCount
-                    Log.d("nc after taken", "$nc")
-                    link = "${selectedItem[0]}${selectedItem[1]}N${nc + 1}"
-                    Log.d("Outside While","$nc $link")
-                    while (snapshot.hasChild(link)) {
-                        nc++
+                    CoroutineScope(Dispatchers.IO).launch {
+                        sh.edit().clear().apply()
+                        nc = snapshot.childrenCount
+                        val totalCountReference = snapshot.ref.parent?.parent?.child("TotalCount")
+
+                        // Get the Task<DataSnapshot> for fetching TotalCount value
+                        val totalCountTask = totalCountReference?.get()
+
+                        // Wait for the task to complete synchronously
+                        val totalCountSnapshot = Tasks.await(totalCountTask!!)
+
+                        // Extract the value of TotalCount
+                        totalCount = totalCountSnapshot.value.toString().toLong()
+                        Log.d("TotalCount", totalCount.toString())
+                        Log.d("nc after taken", "$nc")
                         link = "${selectedItem[0]}${selectedItem[1]}N${nc + 1}"
-                        Log.d("Inside While","$nc $link")
-                    }
-                    Log.d("link inside", "$link")
-                    sh.edit().putString("addr", link).apply()
+                        Log.d("Outside While", "$nc $link")
+                        while (snapshot.hasChild(link)) {
+                            nc++
+                            link = "${selectedItem[0]}${selectedItem[1]}N${nc + 1}"
+                            Log.d("Inside While", "$nc $link")
+                        }
+                        Log.d("link inside", "$link")
+                        sh.edit().putString("addr", link).apply()
 
-                    link = sh.getString("addr", "").toString()
-                    Log.d("link", "$link")
-                    Log.d("nc before link", "$nc $selectedItem")
+                        link = sh.getString("addr", "").toString()
+                        Log.d("link", "$link")
+                        Log.d("nc before link", "$nc $selectedItem")
+
+
+
+                        Log.d("COUNT", "$link")
+                        val ref = nref.child(link)
+                        if (selectedItem == "Video") {
+                            videoUri?.let { uri ->
+                                sr.child(link).putFile(uri).addOnSuccessListener { uploadTask ->
+                                    uploadTask.storage.downloadUrl.addOnSuccessListener { downloadUri ->
+                                        ref.child("VideoURI").setValue(downloadUri.toString())
+                                        ref.child("ImageURI").setValue(downloadUri.toString())
+                                    }.addOnFailureListener { exception ->
+                                        Log.e(
+                                            "Firebase Storage",
+                                            "Error getting download URL: $exception"
+                                        )
+                                        // Handle failure to get download URL
+                                    }
+                                }.addOnFailureListener { exception ->
+                                    Log.e("Firebase Storage", "Error uploading file: $exception")
+                                    Toast.makeText(
+                                        this@newspreview,
+                                        "Error uploading file: $exception",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    // Handle failure to upload file
+                                }
+                            }
+                        } else {
+                            imageUri?.let { uri ->
+                                sr.child(link).putFile(uri).addOnSuccessListener { uploadTask ->
+                                    uploadTask.storage.downloadUrl.addOnSuccessListener { downloadUri ->
+                                        ref.child("ImageURI").setValue(downloadUri.toString())
+                                    }.addOnFailureListener { exception ->
+                                        Log.e(
+                                            "Firebase Storage",
+                                            "Error getting download URL: $exception"
+                                        )
+                                        // Handle failure to get download URL
+                                    }
+                                }.addOnFailureListener { exception ->
+                                    Log.e("Firebase Storage", "Error uploading file: $exception")
+                                    Toast.makeText(
+                                        this@newspreview,
+                                        "Error uploading file: $exception",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    // Handle failure to upload file
+                                }
+                            }
+                        }
+                        ref.child("Content").setValue(newsContentTxt)
+                        ref.child("Header").setValue(newsTitleTxt)
+                        Log.d("totalcount before", totalCount.toString())
+                        totalCount += 1
+                        ref.child("count").setValue(totalCount)
+                        databaseReference.child("TotalCount").setValue(totalCount)
+                        Log.d("totalcount after", totalCount.toString())
+                    }
                     Toast.makeText(this@newspreview, "Uploaded", Toast.LENGTH_SHORT).show()
-                    Log.d("COUNT", "$link")
-                    val ref = nref.child(link)
-                    if (selectedItem == "Video") {
-                        videoUri?.let { uri ->
-                            sr.child(link).putFile(uri).addOnSuccessListener { uploadTask ->
-                                uploadTask.storage.downloadUrl.addOnSuccessListener { downloadUri ->
-                                    ref.child("VideoURI").setValue(downloadUri.toString())
-                                    ref.child("ImageURI").setValue(downloadUri.toString())
-                                }.addOnFailureListener { exception ->
-                                    Log.e("Firebase Storage", "Error getting download URL: $exception")
-                                    // Handle failure to get download URL
-                                }
-                            }.addOnFailureListener { exception ->
-                                Log.e("Firebase Storage", "Error uploading file: $exception")
-                                Toast.makeText(this@newspreview, "Error uploading file: $exception", Toast.LENGTH_SHORT).show()
-                                // Handle failure to upload file
-                            }
-                        }
-                    } else {
-                        imageUri?.let { uri ->
-                            sr.child(link).putFile(uri).addOnSuccessListener { uploadTask ->
-                                uploadTask.storage.downloadUrl.addOnSuccessListener { downloadUri ->
-                                    ref.child("ImageURI").setValue(downloadUri.toString())
-                                }.addOnFailureListener { exception ->
-                                    Log.e("Firebase Storage", "Error getting download URL: $exception")
-                                    // Handle failure to get download URL
-                                }
-                            }.addOnFailureListener { exception ->
-                                Log.e("Firebase Storage", "Error uploading file: $exception")
-                                Toast.makeText(this@newspreview, "Error uploading file: $exception", Toast.LENGTH_SHORT).show()
-                                // Handle failure to upload file
-                            }
-                        }
-                    }
-                    ref.child("Content").setValue(newsContentTxt)
-                    ref.child("Header").setValue(newsTitleTxt)
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("Firebase Database", "Error accessing database: $error")
                     // Handle database access error

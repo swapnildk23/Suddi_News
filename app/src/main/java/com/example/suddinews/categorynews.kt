@@ -54,7 +54,8 @@ class categorynews : AppCompatActivity() {
                             else{
                                 img= null.toString()
                             }
-                            val dataclass = Dclass(img, header, content, vid,newsId)
+                            val count=eachNews.child("count").value.toString().toLong()
+                            val dataclass = Dclass(img, header, content, vid,newsId,count)
                             data.add(dataclass)
                         }
                         rviewC.adapter=MyAdapter(data,applicationContext)

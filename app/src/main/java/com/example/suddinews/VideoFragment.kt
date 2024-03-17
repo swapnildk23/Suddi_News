@@ -39,7 +39,8 @@ class VideoFragment : Fragment() {
                                 videoRef.child("Header").value.toString(),
                                 videoRef.child("Content").value.toString(),
                                 videoRef.child("VideoURI").value.toString(),
-                                videoRef.key
+                                videoRef.key,
+                                videoRef.child("count").value.toString().toLong()
                             )
                         )
                         Log.d("Video Id","${videoRef.key}")
