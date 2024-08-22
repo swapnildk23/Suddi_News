@@ -77,7 +77,12 @@
                 <AutoCompleteTextView
                     android:id="@+id/auto_complete_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:background="@color/ghost_white"
+                    android:backgroundTint="@color/ghost_white"
+
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <EditText

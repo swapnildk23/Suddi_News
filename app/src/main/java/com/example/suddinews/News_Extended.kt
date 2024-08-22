@@ -41,6 +41,7 @@ class News_Extended : AppCompatActivity() {
         if (currentUser != null) {
             userId = currentUser.uid
         }
+        
         val bundle: Bundle? = intent.extras
         newsTitleTxt = bundle?.getString("NEWS_TITLE").toString()
         im = bundle?.getString("IMAGE_URI").toString()

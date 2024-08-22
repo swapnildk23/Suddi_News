@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             app:cardCornerRadius="28dp"
-            android:layout_marginBottom="-20dp"
+            android:layout_marginBottom="-60dp"
             app:cardBackgroundColor="@color/ghost_white"
             android:alpha="0.8">
             <LinearLayout

@@ -42,6 +42,7 @@
             android:text="Please connect to Internet"
             android:textColor="@color/maroon"
             android:visibility="invisible"
+
             />
         <androidx.cardview.widget.CardView
             android:id="@+id/crdView"
@@ -90,6 +91,7 @@
                     android:autofillHints="phone"
                     android:maxLength="10"
                     android:hint="Phone No"
+                    android:textCursorDrawable="@color/black"
                     />
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_next"
@@ -114,6 +116,7 @@
                     android:inputType="text"
                     android:textSize="25dp"
                     android:hint="Please Enter the OTP"
+                    android:textCursorDrawable="@color/black"
                     />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -127,11 +130,10 @@
                     android:textSize="20dp"
                     android:textColor="@color/white"
                     android:backgroundTint="#216524"
-                      android:enabled="false"/>
-
+                    />
                 <View
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"/>
 
                 <TextView
                     android:layout_width="match_parent"

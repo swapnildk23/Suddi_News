@@ -8,6 +8,7 @@
         <item name="android:windowEnterTransition">@transition/trans_anim</item>
         <item name="android:windowExitTransition">@transition/trans_anim</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="Theme.SuddiNews" parent="Base.Theme.SuddiNews" />

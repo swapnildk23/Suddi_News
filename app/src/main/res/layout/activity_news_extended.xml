@@ -16,7 +16,8 @@
             android:text="@string/hello_blank_fragment"
             android:layout_marginTop="20dp"
             android:layout_marginHorizontal="20dp"
-            android:textSize="45sp"
+            android:fontFamily="@font/abhaya_libre_bold"
+            android:textSize="30sp"
             android:textColor="@color/black"
             android:layout_marginBottom="50dp"
             />
@@ -36,9 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_below="@id/header_line"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="20dp"
 
             />
         <VideoView

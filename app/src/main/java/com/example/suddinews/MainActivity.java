@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     verifycode(otp.getText().toString());
                 }
 
-               // startActivity(new Intent(MainActivity.this, News.class));
+//                startActivity(new Intent(MainActivity.this, News.class));
             }
         });
     }
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
                             /*
                             Code for saving phone number and checking and deciding whether to go to registration page or
-                            home page shoul be here and make sure to change the startActivity as required
+                            home page should be here and make sure to change the startActivity as required
                              */
                              FirebaseUser currentFireUser = FirebaseAuth.getInstance().getCurrentUser();
                              if (currentFireUser != null) {
